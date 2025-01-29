@@ -1,12 +1,13 @@
+import os
 import hmac
 import hashlib
 import subprocess
 import logging
 from flask import Flask, request, jsonify
+from dotenv import load_dotenv
 
 app = Flask(__name__)
-
-GITHUB_SECRET = 
+load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -26,7 +27,7 @@ def webhook():
             return jsonify({'error': 'Unsupported hash algorithm'}, status=400)
 
         mac = hmac.new(
-            GITHUB_SECRET.encode(), msg=request.data, digestmod=hashlib.sha256
+            os.getenv("GITHUB_SECRET").encode(), msg=request.data, digestmod=hashlib.sha256
         )
         if not hmac.compare_digest(mac.hexdigest(), signature):
             logger.error('Invalid signature')
