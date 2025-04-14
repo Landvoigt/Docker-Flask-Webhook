@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM python:3.13-slim
 
 WORKDIR /app
 
@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN git config --global --add safe.directory /app
-RUN git config --global --add safe.directory /srv/projects/devknowhow/devknowhow_backend
+RUN git config --global --add safe.directory /srv/projects/devknowhow_backend
 
 RUN mkdir -p /root/.ssh && \
     ssh-keyscan github.com >> /root/.ssh/known_hosts && \
